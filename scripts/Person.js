@@ -9,11 +9,7 @@ function Person(name, startLeave, hasLeaveThisYear, remainingLeave, leaves) {
 function generateLeaves(startLeave, hasLeaveThisYear, remainingLeave, leaveArr) {
     const leaves = {};
     for (let leave of leaveArr) {
-        const finalLeave = {
-            leaveStart: leave[0],
-            leaveEnd: leave[1],
-        }
-        const year = leave[0].split('-')[0];
+        const year = leave['leaveStart'].split('-')[0];
         if (!leaves[year]) {
             leaves[year] = {};
             leaves[year].leaveOnYearStart = startLeave;
@@ -22,9 +18,9 @@ function generateLeaves(startLeave, hasLeaveThisYear, remainingLeave, leaveArr) 
             } else {
                 leaves[year].leaveOnYearEnd = 0;
             }
-            leaves[year].leaves = [finalLeave];
+            leaves[year].leaves = leaveArr;
         } else {
-            leaves[year].leaves.push(finalLeave);
+            leaves[year].leaves.push(leaveArr);
         }
     }
     return leaves;
