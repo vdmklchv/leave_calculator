@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Person</title>
+</head>
+<body>
+    <header>
+        <h1>Leave Calculator</h1>
+        <a href="index.html">Home</a>
+        <a href="add.html">Add Person</a>
+        <a href="settings.html">Settings</a>
+    </header>
+    <main>
+        <h1>Add Person</h1>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="person-name" required>
+            <br>
+            <label for="start-leave">Days at year start:</label>
+            <input type="number" id="start-leave" name="start-leave" required>
+            <br>
+            <label for="has-leave-this-year">Has leave this year:</label>
+            <input type="checkbox" name="has-leave-this-year" id="has-leave-this-year" checked required>
+            <br>
+            <div id="leaves">
+                <div id="leave-1">
+                    <label for="leave-start-1">Leave Start:</label>
+                    <input type="date" name="leave-start-1" id="leave-start-1">
+                    <br>
+                    <label for="leave-end-1">Leave End:</label>
+                    <input type="date" name="leave-end-1" id="leave-end-1">
+                    <br>
+                    <button id="add-extra-leave">Add another leave</button>
+                </div>
+            </div>            
+            <input type="submit" id="submit-btn" value="Submit">
+        </form>
+    </main>
+    <script type="module" src="./assets/js/add.js" defer></script>
+</body>
+</html>
