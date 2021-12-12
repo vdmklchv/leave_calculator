@@ -1,5 +1,5 @@
 // IMPORTS
-import { createTableCell, dateToString, calculateRemainingLeave, constructLeaveArrayForCalculateLeave } from "./helpers.js";
+import { createTableCell, dateToString, calculateRemainingLeave } from "./helpers.js";
 
 // ELEMENT SELECTORS
 const elements = {
@@ -51,7 +51,7 @@ const loadYearData = async () => {
             const leaveForYear = Number(leaveForYearJS[selectedYear]);
 
             // convert current leave structure to one that can be used with calculateRemaingLeave
-            const leavesAltered = constructLeaveArrayForCalculateLeave(person.leaves[selectedYear].leaves);
+            const leavesAltered = person.leaves[selectedYear].leaves;
             
             // recalculate remaining leave on each page load
             const leaveOnYearEnd = calculateRemainingLeave(leavesAltered, leaveOnYearStart, leaveForYear);
