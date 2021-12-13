@@ -13,11 +13,7 @@ function generateLeaves(startLeave, hasLeaveThisYear, remainingLeave, leaveArr) 
         if (!leaves[year]) {
             leaves[year] = {};
             leaves[year].leaveOnYearStart = startLeave;
-            if (hasLeaveThisYear === true) {
-                leaves[year].leaveOnYearEnd = remainingLeave;
-            } else {
-                leaves[year].leaveOnYearEnd = 0;
-            }
+            leaves[year].leaveOnYearEnd = remainingLeave;
             leaves[year].leaves = leaveArr;
         } else {
             leaves[year].leaves = leaveArr;

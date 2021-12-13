@@ -12,7 +12,10 @@ const dateToString = (date) => {
 
 // leaveStart here expects array of arrays ie. [[leaveStart1, leaveEnd1], [leaveStart2, leaveEnd2] etc.]
 // calculates remaining leaves for all leaves in leave array and takes in number of leave days left for beginning of the year and total number of allowed days this year
-const calculateRemainingLeave = (leaves, leaveStart, leaveDaysPerYear) => {
+const calculateRemainingLeave = (leaves, leaveStart, leaveDaysPerYear, hasLeaveThisYear) => {
+    if (!hasLeaveThisYear) {
+        return 0;
+    }
     let passedLeaveDaysThisYear = 0;
     for (let leaveGroup of leaves) {
         const spentLeaveDaysInOneLeaveGroup = (new Date(leaveGroup['leaveEnd']) - new Date(leaveGroup['leaveStart'])) / 1000 / 60 / 60 / 24 + 1;

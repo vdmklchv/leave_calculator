@@ -52,11 +52,9 @@ const loadYearData = async () => {
 
             // convert current leave structure to one that can be used with calculateRemaingLeave
             const leavesAltered = person.leaves[selectedYear].leaves;
-            
             // recalculate remaining leave on each page load
-            const leaveOnYearEnd = calculateRemainingLeave(leavesAltered, leaveOnYearStart, leaveForYear);
+            const leaveOnYearEnd = calculateRemainingLeave(leavesAltered, leaveOnYearStart, leaveForYear, Number(person.leaves[selectedYear].leaveOnYearEnd));
             tableRow.appendChild(createTableCell(leaveOnYearEnd));
-
             elements.mainTableBody.appendChild(tableRow);
         }
     } catch (e) {

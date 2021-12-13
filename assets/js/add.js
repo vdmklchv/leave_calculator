@@ -57,7 +57,7 @@ document.querySelector('body').addEventListener('click', async (e) => {
         const currentYearLimit = leaveLimitsJS[currentYear];
         
         // Calculate and set remaining leave
-        const remainingLeave = String(calculateRemainingLeave(personData.leaves, Number(personData['start-leave']), currentYearLimit));
+        const remainingLeave = String(calculateRemainingLeave(personData.leaves, Number(personData['start-leave']), currentYearLimit, personData['has-leave-this-year']));
         personData['remaining-leave'] = remainingLeave;
 
         // send data to backend
