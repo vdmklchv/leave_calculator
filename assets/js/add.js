@@ -38,8 +38,9 @@ document.querySelector('body').addEventListener('click', async (e) => {
         for (let input of document.querySelectorAll('input')) {
             if (input.id === 'submit-btn') {
                 continue;
-            }
-            if (input.id.startsWith('leave-end') || input.id.startsWith('leave-start')) {
+            } else if (input.id === 'has-leave-this-year') {
+                personData[input.id] = input.checked;
+            } else if (input.id.startsWith('leave-end') || input.id.startsWith('leave-start')) {
                 constructLeave(leaves, input);
             } else {
                 personData[input.id] = input.value;
