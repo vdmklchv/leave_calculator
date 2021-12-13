@@ -1,5 +1,5 @@
 // IMPORTS
-import { calculateRemainingLeave, constructLeave, constructLeaveArrayForDB } from './helpers.js';
+import { calculateRemainingLeave, constructLeave } from './helpers.js';
 
 // ELEMENT SELECTORS
 const elements = {
@@ -47,7 +47,7 @@ document.querySelector('body').addEventListener('click', async (e) => {
         }
 
         // add restructured leave array to person data
-        personData.leaves = constructLeaveArrayForDB(leaves);
+        personData.leaves = leaves;
         
         // Retrieve limits for the year of person addition
         const currentYear = new Date().getFullYear();

@@ -15,7 +15,7 @@ const dateToString = (date) => {
 const calculateRemainingLeave = (leaves, leaveStart, leaveDaysPerYear) => {
     let passedLeaveDaysThisYear = 0;
     for (let leaveGroup of leaves) {
-        const spentLeaveDaysInOneLeaveGroup = (new Date(leaveGroup[1]) - new Date(leaveGroup[0])) / 1000 / 60 / 60 / 24 + 1;
+        const spentLeaveDaysInOneLeaveGroup = (new Date(leaveGroup['leaveEnd']) - new Date(leaveGroup['leaveStart'])) / 1000 / 60 / 60 / 24 + 1;
         passedLeaveDaysThisYear += spentLeaveDaysInOneLeaveGroup;
     }
     return leaveStart + leaveDaysPerYear - passedLeaveDaysThisYear;
@@ -28,35 +28,15 @@ const constructLeave = (array, input) => {
     const index = Number(input.id.split('-')[2]) - 1;
     const type = input.id.split('-')[1];
     if (!array[index]) {
-        array[index] = [];
+        array[index] = {};
     }
     if (type === 'start') {
-        array[index][0] = input.value;
+        array[index]['leaveStart'] = input.value;
     } else {
-        array[index][1] = input.value;
+        array[index]['leaveEnd'] = input.value;
     }
 }
 
-// construct leaves array for sending to db
-const constructLeaveArrayForDB = (leaveArr) => {
-    const arr = [];
-    for (let leave of leaveArr) {
-        arr.push([
-            leave[0],
-            leave[1],
-        ]);
-    }
-    return arr;
-}
 
-// convert leaves to format required by calculate leave function
-const constructLeaveArrayForCalculateLeave = (arr) => {
-    const resultArr = [];
-    for (let obj of arr) {
-        resultArr.push([obj.leaveStart, obj.leaveEnd]);
-    }
-    return resultArr;
-}
-
-export { createTableCell, dateToString, calculateRemainingLeave, constructLeave, constructLeaveArrayForDB, constructLeaveArrayForCalculateLeave };
+export { createTableCell, dateToString, calculateRemainingLeave, constructLeave };
 
