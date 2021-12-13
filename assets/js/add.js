@@ -59,7 +59,6 @@ document.querySelector('body').addEventListener('click', async (e) => {
         const remainingLeave = String(calculateRemainingLeave(personData.leaves, Number(personData['start-leave']), currentYearLimit));
         personData['remaining-leave'] = remainingLeave;
 
-        console.log(personData);
         // send data to backend
         fetch('http://localhost:3000/persons', { headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, method: 'POST', body: JSON.stringify(personData) });
         

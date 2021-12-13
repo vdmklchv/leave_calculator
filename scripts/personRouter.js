@@ -10,7 +10,6 @@ personRouter.get('/', (req, res) => {
 })
 
 personRouter.post('/', (req, res) => {
-    console.log(req.body.leaves);
     const person = new Person(req.body.name, req.body['start-leave'], req.body['has-leave-this-year'], req.body['remaining-leave'], req.body.leaves);
     dummyDb.addToDB(person);
     res.send(req.body);
