@@ -1,5 +1,5 @@
 // IMPORTS
-import { calculateRemainingLeave, constructLeave } from './helpers.js';
+import { calculateRemainingLeave, constructLeave, areLeavesValid } from './helpers.js';
 
 // ELEMENT SELECTORS
 const elements = {
@@ -60,10 +60,23 @@ document.querySelector('body').addEventListener('click', async (e) => {
         const remainingLeave = String(calculateRemainingLeave(personData.leaves, Number(personData['start-leave']), currentYearLimit, personData['has-leave-this-year']));
         personData['remaining-leave'] = remainingLeave;
 
-        // send data to backend
-        fetch('http://localhost:3000/persons', { headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, method: 'POST', body: JSON.stringify(personData) });
-        
-        // WRITE THEN STATEMENTS SHOWING SUCCESS
+        // Сheck validity of leaves for created person
+        if (areLeavesValid(personData.leaves)) {
+            // send data to backend
+            fetch('http://localhost:3000/persons', {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify(personData)
+            });
+
+            // WRITE THEN STATEMENTS SHOWING SUCCESS
+        } else {
+            // WRITE STATEMETS SHOWING FAILURE
+            console.log('Invalid leaves');
+        }     
     }
 })
 

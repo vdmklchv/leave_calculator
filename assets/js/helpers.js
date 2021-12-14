@@ -25,7 +25,6 @@ const calculateRemainingLeave = (leaves, leaveStart, leaveDaysPerYear, hasLeaveT
 }
 
 
-// REWRITE constructLeave to omit constructLeaveArrayForDB
 // construct leave takes in input object and array of leaves and updates array with correct structure to put into data sent back to backend
 const constructLeave = (array, input) => {
     const index = Number(input.id.split('-')[2]) - 1;
@@ -40,6 +39,16 @@ const constructLeave = (array, input) => {
     }
 }
 
+// CHECK validity of leaves 
+const areLeavesValid = (leavesArr) => {
+    for (let leaveGroup of leavesArr) {
+        if (new Date(leaveGroup.leaveEnd) - new Date(leaveGroup.leaveStart) < 0) {
+            return false;
+        }
+    }
+    return true;
+}
 
-export { createTableCell, dateToString, calculateRemainingLeave, constructLeave };
+
+export { createTableCell, dateToString, calculateRemainingLeave, constructLeave, areLeavesValid };
 
