@@ -1,5 +1,5 @@
 // IMPORTS
-import { calculateRemainingLeave, constructLeave, areLeavesValid } from './helpers.js';
+import { calculateRemainingLeave, constructLeave, areLeavesValid, leavesIntersect } from './helpers.js';
 
 // ELEMENT SELECTORS
 const elements = {
@@ -61,7 +61,7 @@ document.querySelector('body').addEventListener('click', async (e) => {
         personData['remaining-leave'] = remainingLeave;
 
         // Сheck validity of leaves for created person
-        if (areLeavesValid(personData.leaves)) {
+        if (areLeavesValid(personData.leaves) && !leavesIntersect(personData.leaves)) {
             // send data to backend
             fetch('http://localhost:3000/persons', {
                 headers: {
@@ -73,10 +73,12 @@ document.querySelector('body').addEventListener('click', async (e) => {
             });
 
             // WRITE THEN STATEMENTS SHOWING SUCCESS
-        } else {
+        } else if (!areLeavesValid(personData.leaves)) {
             // WRITE STATEMETS SHOWING FAILURE
-            console.log('Invalid leaves');
-        }     
+            console.log('Provided leaves data is incorrect');
+        } else if (leavesIntersect(personData.leaves)) {
+            console.log('Dates overlap, please make sure you add distinct dates.');
+        }
     }
 })
 

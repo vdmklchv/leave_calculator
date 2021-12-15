@@ -39,7 +39,7 @@ const constructLeave = (array, input) => {
     }
 }
 
-// CHECK validity of leaves 
+// CHECK validity of leaves (helper function) 
 const areLeavesValid = (leavesArr) => {
     for (let leaveGroup of leavesArr) {
         if (new Date(leaveGroup.leaveEnd) - new Date(leaveGroup.leaveStart) < 0) {
@@ -49,6 +49,23 @@ const areLeavesValid = (leavesArr) => {
     return true;
 }
 
+// CHECK if leaves intersect (helper function)
+const leavesIntersect = (leavesArr) => {
+    for (let i = 0; i < leavesArr.length; i++) {
+        for (let j = i; j < leavesArr.length; j++) {
+            if (leavesArr[i] === leavesArr[j]) {
+                continue;
+            }
+            // do something
+            if (new Date(leavesArr[j].leaveStart) <= new Date(leavesArr[i].leaveEnd) && new Date(leavesArr[j].leaveEnd) >= new Date(leavesArr[i].leaveStart)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
-export { createTableCell, dateToString, calculateRemainingLeave, constructLeave, areLeavesValid };
+
+
+export { createTableCell, dateToString, calculateRemainingLeave, constructLeave, areLeavesValid, leavesIntersect };
 
