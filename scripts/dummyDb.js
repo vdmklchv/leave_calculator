@@ -21,5 +21,14 @@ const getPersons = () => {
     return persons;
 }
 
+const deletePerson = (person) => {
+    const index = persons.findIndex((entry) => entry === person);
+    persons.splice(index, 1);
+}
 
-module.exports = { persons, addToDB, leavesPerYear, getLeavesPerYear, getPersons };
+const getPersonByName = (name) => {
+    return persons.find((person) => person.name === name);
+}
+
+
+module.exports = { persons, addToDB, leavesPerYear, getLeavesPerYear, getPersons, deletePerson, getPersonByName };
