@@ -15,4 +15,11 @@ personRouter.post('/', (req, res) => {
     res.send(req.body);
 })
 
+personRouter.delete('/:name', (req, res) => {
+    const name = req.params.name;
+    const person = dummyDb.getPersonByName(name);
+    dummyDb.deletePerson(person);
+    res.status(204).send();
+})
+
 module.exports = personRouter;
