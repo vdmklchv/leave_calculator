@@ -17,6 +17,7 @@ const loadYearData = async () => {
         const selectedYear = elements.yearSelect.value;
         const response = await fetch(`http://localhost:3000/years/${selectedYear}`);
         const data = await response.json();
+        let rowCounter = 0;
 
         for (let person of data) {
             // create unordered list and table row to construct data
@@ -28,7 +29,9 @@ const loadYearData = async () => {
             tableRow.appendChild(createTableCell(leaveOnYearStart));
 
             const name = person.name;
-            tableRow.appendChild(createTableCell(name));
+            const nameCell = createTableCell(name);
+            nameCell.id = `name-${rowCounter}`;
+            tableRow.appendChild(nameCell);
 
             const leaves = person.leaves[selectedYear].leaves;
 
@@ -55,7 +58,12 @@ const loadYearData = async () => {
             // recalculate remaining leave on each page load
             const leaveOnYearEnd = calculateRemainingLeave(leavesAltered, leaveOnYearStart, leaveForYear, Number(person.leaves[selectedYear].leaveOnYearEnd));
             tableRow.appendChild(createTableCell(leaveOnYearEnd));
+            // Create cell with delete link
+            const deleteCell = createTableCell(`<a href="" class="delete-link" id="delete-link-${rowCounter}">Delete</a>`);
+            tableRow.appendChild(deleteCell);
             elements.mainTableBody.appendChild(tableRow);
+
+            rowCounter++;
         }
     } catch (e) {
         console.log(e);
@@ -68,4 +76,23 @@ loadYearData();
 // run table construction and creation on selected year change
 elements.yearSelect.addEventListener('change', () => {
     loadYearData();
+})
+
+elements.mainTableBody.addEventListener('click', async (e) => {
+    if (e.target.classList.contains('delete-link')) {
+        e.preventDefault();
+        // get name of clicked person
+        const rowNumber = e.target.id.split('-')[2];
+        const name = document.getElementById(`name-${rowNumber}`).textContent;
+        // send requrest to backend to remove from db
+        const url = `http://localhost:3000/persons/${name}`;
+        await fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+            },
+            method: 'DELETE',
+        });
+        // reload year data
+        loadYearData();
+    }
 })
