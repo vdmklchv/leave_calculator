@@ -45,6 +45,7 @@ document.querySelector('body').addEventListener('click', async (e) => {
             } else {
                 personData[input.id] = input.value;
             }
+            input.value = '';
         }
 
         // add restructured leave array to person data
