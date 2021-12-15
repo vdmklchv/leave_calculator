@@ -65,7 +65,21 @@ const leavesIntersect = (leavesArr) => {
     return false;
 }
 
+// check if name exists
+const nameExists = async (name) => {
+    const result = await fetch('http://localhost:3000/persons');
+    const persons = await result.json();
+    if (persons.length > 0) {
+        for (let person of persons) {
+            if (name.toLowerCase() === person.name.toLowerCase()) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 
-export { createTableCell, dateToString, calculateRemainingLeave, constructLeave, areLeavesValid, leavesIntersect };
+
+export { createTableCell, dateToString, calculateRemainingLeave, constructLeave, areLeavesValid, leavesIntersect, nameExists };
 

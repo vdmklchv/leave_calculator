@@ -1,5 +1,5 @@
 // IMPORTS
-import { calculateRemainingLeave, constructLeave, areLeavesValid, leavesIntersect } from './helpers.js';
+import { calculateRemainingLeave, constructLeave, areLeavesValid, leavesIntersect, nameExists } from './helpers.js';
 
 // ELEMENT SELECTORS
 const elements = {
@@ -61,8 +61,10 @@ document.querySelector('body').addEventListener('click', async (e) => {
         const remainingLeave = String(calculateRemainingLeave(personData.leaves, Number(personData['start-leave']), currentYearLimit, personData['has-leave-this-year']));
         personData['remaining-leave'] = remainingLeave;
 
+        const repeatedName = await nameExists(personData.name);
+
         // Сheck validity of leaves for created person
-        if (areLeavesValid(personData.leaves) && !leavesIntersect(personData.leaves)) {
+        if (areLeavesValid(personData.leaves) && !leavesIntersect(personData.leaves) && !repeatedName) {
             // send data to backend
             fetch('http://localhost:3000/persons', {
                 headers: {
@@ -79,6 +81,8 @@ document.querySelector('body').addEventListener('click', async (e) => {
             console.log('Provided leaves data is incorrect');
         } else if (leavesIntersect(personData.leaves)) {
             console.log('Dates overlap, please make sure you add distinct dates.');
+        } else if (repeatedName) {
+            console.log('User with such name already exists.');
         }
     }
 })
